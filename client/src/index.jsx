@@ -4,6 +4,7 @@ import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,8 +15,19 @@ class App extends React.Component {
   }
 
   search (term) {
+    fetch('http://localhost:1128/repos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({search: term})
+    })
+    // .then(response => response.json())
+    // .then(response => console.log(response));
+
     console.log(`${term} was searched`);
-    // TODO
+    
   }
 
   render () {
