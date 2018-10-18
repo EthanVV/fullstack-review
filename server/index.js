@@ -2,6 +2,7 @@ const express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
 let githubSearch = require('../helpers/github.js').getReposByUsername;
+let save = require('../database/index.js').save;
 
 app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -10,8 +11,16 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.post('/repos', function (req, res) {
   let searchTerm = req.body.search;
 
-  console.log(searchTerm);
-  githubSearch(searchTerm);
+  console.log('Search Term @server:', searchTerm);
+  // get it to work, revisit later
+  githubSearch(searchTerm, (error, data) => {
+    if (error) {
+      console.log(error);
+      throw(error);
+    } else {
+      save(data);
+    }
+  });
   //res.status(201).end();
   // This route should take the github username provided
   // and get the repo information from the github API, then
