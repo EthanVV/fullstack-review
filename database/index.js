@@ -15,7 +15,6 @@ let repoSchema = mongoose.Schema({
   owner: {
     login: String,
     id: Number
-    // add more as needed
   }
 });
 
@@ -32,6 +31,10 @@ let saveThing = (data) => {
     owner: temp.owner,
     
   })
+
+  Repo.findOne().exec((err, repo) => {
+    console.log(repo);
+  })
   // for (element of data) {
   //   Repo.create({
 
@@ -41,6 +44,6 @@ let saveThing = (data) => {
 
 // testing bellow
 // let testRepo = new Repo(1234, 'nameOfASupposedRepo', 'fullName', {login: 'login', id: '0904'});
-// console.log(testRepo.id);
+
 
 module.exports.save = saveThing;
